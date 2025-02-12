@@ -22,5 +22,10 @@ class DatabaseSeeder extends Seeder
         // ]);
         Passenger::factory(1000)->create();
         Flight::factory(50)->create();
+        
+        Flight::all()->each(function ($flight) {
+            $passengers = Passenger::inRandomOrder()->take(rand(1, 10))->get();
+            $flight->passengers()->attach($passengers);
+        });
     }
 }

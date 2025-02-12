@@ -10,9 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PassengerFactory extends Factory
 {
-
-    
-
     /**
      * Define the model's default state.
      *

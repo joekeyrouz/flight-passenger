@@ -21,4 +21,11 @@ class Passenger extends Model
     public function flights(){
         return $this->belongsToMany(Flight::class, 'passenger_flight');
     }
+
+    public function scopeFilter($query, array $filters){
+        if($filters['search'] ?? false){
+            $query->where('id', 'like', request('search'))
+            ->orWhere('first_name', 'like', '%'.request('search') . '%');
+        }
+    }
 }
