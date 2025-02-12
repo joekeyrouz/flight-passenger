@@ -10,7 +10,7 @@ class FlightController extends Controller
 {
     public function index(){
         $flights = Flight::latest('updated_at')->paginate(25);
-        return response()->json($flight);
+        return response()->json($flights);
     }
 
     public function show(Request $req,Flight $flight){

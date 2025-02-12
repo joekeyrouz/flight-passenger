@@ -11,7 +11,7 @@ class PassengerController extends Controller
     public function index(){
         $passengers = Passenger::latest('updated_at')->paginate(20);
 
-        return response()->json($pass);
+        return response()->json($passengers);
     }
 
     public function show(Request $req,Passenger $passenger){
