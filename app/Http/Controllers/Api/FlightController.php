@@ -13,13 +13,7 @@ class FlightController extends Controller
         return response()->json($flight);
     }
 
-    public function filter(Request $req){
-        $query = Flight::query();
-
-        if($req->has('fid')){
-            $query->where('id', 'like', "{$req->fid}");
-        }
-
-        return response()->json($query->get());
+    public function show(Request $req,Flight $flight){
+        return response()->json($flight);
     }
 }
