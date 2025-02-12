@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 class FlightController extends Controller
 {
     public function index(){
-        $flight = Flight::latest('updated_at')->paginate(25);
+        $flights = Flight::latest('updated_at')->paginate(25);
         return response()->json($flight);
     }
 
