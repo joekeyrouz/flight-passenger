@@ -17,7 +17,7 @@ return new class extends Migration
             $table->String('last_name');
             $table->String('email')->unique();
             $table->String('password');
-            $table->Date('DOB');
+            $table->Date('date_of_birth');
             $table->Date('passport_expiry_date');
             $table->timestamps();
         });

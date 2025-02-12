@@ -9,14 +9,17 @@ use App\Http\Controllers\Controller;
 class FlightController extends Controller
 {
     public function index(){
-        return view('show_flights', [
-            'flights' => Flight::orderBy('updated_at', 'desc')->filter(request(['search']))->simplePaginate(25)
-        ]);
+        $flight = Flight::latest('updated_at')->paginate(25);
+        return response()->json($flight);
     }
 
-    public function show(Flight $flight){
-        return view('flight-pass', [
-            'flight' => $flight
-        ]);
+    public function filter(Request $req){
+        $query = Flight::query();
+
+        if($req->has('fid')){
+            $query->where('id', 'like', "{$req->fid}");
+        }
+
+        return response()->json($query->get());
     }
 }

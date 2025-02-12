@@ -11,7 +11,7 @@ class Passenger extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['fisrt_name', 'last_name', 'email', 'password', 'DOB', 'passport_expiry_date'];
+    protected $guarded = [];
 
     public function setPasswordAttribute($value)
     {
@@ -20,12 +20,5 @@ class Passenger extends Model
 
     public function flights(){
         return $this->belongsToMany(Flight::class, 'passenger_flight');
-    }
-
-    public function scopeFilter($query, array $filters){
-        if($filters['search'] ?? false){
-            $query->where('id', 'like', request('search'))
-            ->orWhere('first_name', 'like', '%'.request('search') . '%');
-        }
     }
 }
