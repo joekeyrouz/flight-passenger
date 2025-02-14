@@ -23,21 +23,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-    // **Step 1: Validate the Request Data**
-        $validatedData = $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:10',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
         ]);
 
-    // **Step 2: Create the User**
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']), // Hashing password
-        ]);
+        $user = User::create($data);
 
-    // **Step 3: Return a JSON Response**
         return response()->json(['message' => 'User created successfully', 'user' => $user]);
     }
 
@@ -57,17 +50,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $validatedData = $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:10',
             'email' => 'required|email|unique:users,email,',
             'password' => 'required|string|min:8',
         ]);
     
-        $user->update([
-            'name' => $validatedData['name'] ?? $user->name,
-            'email' => $validatedData['email'] ?? $user->email,
-            'password' => isset($validatedData['password']) ? Hash::make($validatedData['password']) : $user->password,
-        ]);
+        $data['password'] = Hash::make($data['password']);
+
+        $user->update($data);
     
         return response()->json(['message' => 'User updated successfully', 'user' => $user]);
     }
