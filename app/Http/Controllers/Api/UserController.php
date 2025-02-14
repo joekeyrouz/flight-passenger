@@ -26,7 +26,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:10',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         $user = User::create($data);
@@ -53,7 +53,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:10',
             'email' => 'required|email|unique:users,email,',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
         ]);
     
         $data['password'] = Hash::make($data['password']);
