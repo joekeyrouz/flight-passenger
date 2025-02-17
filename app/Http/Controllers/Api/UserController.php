@@ -29,6 +29,8 @@ class UserController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
+        $data['password'] = Hash::make($data['password']);
+
         $user = User::create($data);
 
         return response()->json(['message' => 'User created successfully', 'user' => $user]);
