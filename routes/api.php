@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\FlightController;
 use App\Http\Controllers\Api\PassengerController;
@@ -23,12 +24,36 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //Route::get('/', [Controller::class, 'go']);
-Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
+// Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
 
-Route::get('/flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
+// Route::get('/flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
 
-Route::get('/flights', [FlightController::class, 'index']);
+// Route::get('/flights', [FlightController::class, 'index']);
 
-Route::get('/flights/{flight}', [FlightController::class, 'show']);
+// Route::get('/flights/{flight}', [FlightController::class, 'show']);
 
-Route::apiResource('users', UserController::class);
+// Route::apiResource('users', UserController::class);
+
+// Route::post('/users/register', [AuthController::class, 'register']);
+// Route::post('/users/login', [AuthController::class, 'login']);
+// Route::post('/users/logout', [AuthController::class, 'logout'])->middleWare('auth:sanctum');
+
+Route::post('/users/login', [AuthController::class, 'login']);
+Route::post('/users/register', [AuthController::class, 'register']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
+    Route::get('/flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
+    Route::get('/flights', [FlightController::class, 'index']);
+    Route::get('/flights/{flight}', [FlightController::class, 'show']);
+    Route::post('/users/logout', [AuthController::class, 'logout'])->middleWare('auth:sanctum');
+
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
+        Route::get('/flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
+        Route::get('/flights', [FlightController::class, 'index']);
+        Route::get('/flights/{flight}', [FlightController::class, 'show']);
+        Route::apiResource('users', UserController::class);
+        Route::post('/users/logout', [AuthController::class, 'logout'])->middleWare('auth:sanctum');
+    });
+});
