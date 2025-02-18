@@ -7,7 +7,10 @@ use App\Models\User;
 use App\Models\Flight;
 use App\Models\Passenger;
 use Illuminate\Database\Seeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\FlightSeeder;
 use Spatie\Permission\Models\Role;
+use Database\Seeders\PassengerSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -41,12 +44,12 @@ class DatabaseSeeder extends Seeder
             FlightSeeder::class,
         ]);
 
-        Passenger::factory(1000)->create();
-        Flight::factory(50)->create();
+        // Passenger::factory(1000)->create();
+        // Flight::factory(50)->create();
         
-        Flight::all()->each(function ($flight) {
-            $passengers = Passenger::inRandomOrder()->take(rand(1, 10))->get();
-            $flight->passengers()->attach($passengers);
-        });
+        // Flight::all()->each(function ($flight) {
+        //     $passengers = Passenger::inRandomOrder()->take(rand(1, 10))->get();
+        //     $flight->passengers()->attach($passengers);
+        // });
     }
 }
