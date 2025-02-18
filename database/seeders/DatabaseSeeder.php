@@ -18,22 +18,28 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
+        // $adminRole = Role::create(['name' => 'admin']);
+        // $userRole = Role::create(['name' => 'user']);
 
-        $admin = User::create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => 'admin12345'
-        ]);
-        $admin->assignRole($adminRole);
+        // $admin = User::create([
+        //     'name' => 'admin',
+        //     'email' => 'admin@gmail.com',
+        //     'password' => 'admin12345'
+        // ]);
+        // $admin->assignRole($adminRole);
 
-        $user = User::create([
-            'name' => 'Regular User',
-            'email' => 'user@gmail.com',
-            'password' => 'user12345',
+        // $user = User::create([
+        //     'name' => 'Regular User',
+        //     'email' => 'user@gmail.com',
+        //     'password' => 'user12345',
+        // ]);
+        // $user->assignRole($userRole);
+
+        $this->call([
+            RoleSeeder::class,
+            PassengerSeeder::class,
+            FlightSeeder::class,
         ]);
-        $user->assignRole($userRole);
 
         Passenger::factory(1000)->create();
         Flight::factory(50)->create();
