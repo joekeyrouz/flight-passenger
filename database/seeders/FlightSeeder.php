@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Flight;
+use App\Models\Passenger;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class FlightSeeder extends Seeder
 {
@@ -13,5 +15,10 @@ class FlightSeeder extends Seeder
     public function run(): void
     {
         Flight::factory(50)->create();
+
+        Flight::all()->each(function ($flight) {
+            $passengers = Passenger::inRandomOrder()->take(rand(1, 10))->get();
+            $flight->passengers()->attach($passengers);
+        });
     }
 }
