@@ -27,5 +27,6 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('/flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
     Route::get('/flights', [FlightController::class, 'index']);
     Route::get('/flights/{flight}', [FlightController::class, 'show']);
+    Route::get('/users/export', [UserController::class, 'export']);
     Route::apiResource('users', UserController::class);
 });
