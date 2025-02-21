@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\FlightController;
 use App\Http\Controllers\Api\PassengerController;
+use App\Http\Controllers\Api\ExportUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +22,12 @@ use App\Http\Controllers\Api\PassengerController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/users/register', [AuthController::class, 'register']);
 Route::post('/users/logout', [AuthController::class, 'logout'])->middleWare('auth:sanctum');
+Route::get('/users/export', [ExportUserController::class, 'export']);
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
     Route::get('/flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
     Route::get('/flights', [FlightController::class, 'index']);
     Route::get('/flights/{flight}', [FlightController::class, 'show']);
-    Route::get('/users/export', [UserController::class, 'export']);
     Route::apiResource('users', UserController::class);
 });
