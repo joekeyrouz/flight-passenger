@@ -14,9 +14,9 @@ class PassengerController extends Controller
     public function index(Flight $flight){
         $cacheKey = "passengers_flight_{$flight->id}";
         $passengers = Cache::Remember($cacheKey,10,function() use($flight){
-                return Passenger::whereHas('flights', function (Builder $query) use($flight){
-                    $query->where('flight_id', "{$flight->id}");
-                })->get();});
+            return Passenger::whereHas('flights', function (Builder $query) use($flight){
+                $query->where('flight_id', "{$flight->id}");
+            })->get();});
         return response()->json($passengers);
     }
 
