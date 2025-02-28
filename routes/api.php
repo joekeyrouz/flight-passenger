@@ -22,10 +22,12 @@ use App\Http\Controllers\Api\ExportUserController;
 Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:3,1');
 Route::post('/users/register', [AuthController::class, 'register']);
 Route::post('/users/logout', [AuthController::class, 'logout'])->middleWare('auth:sanctum');
+Route::get('/flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
+Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
-    Route::get('/flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
+
+
     Route::get('/flights', [FlightController::class, 'index']);
     Route::get('/flights/{flight}', [FlightController::class, 'show']);
     Route::apiResource('users', UserController::class);

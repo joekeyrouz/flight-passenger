@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
+use App\Models\Flight;
 use Illuminate\Console\Command;
+use App\Jobs\SendFlightReminderJob;
 
 class DispatchFlightReminders extends Command
 {
@@ -25,12 +28,7 @@ class DispatchFlightReminders extends Command
      */
     public function handle()
     {
-        $time24HoursLater = Carbon::now()->addHours(24);
-
-        $flights = Flight::whereBetween('departure_time', [
-            $time24HoursLater->copy()->subMinutes(5),
-            $time24HoursLater->copy()->addMinutes(5),
-        ])->get();
+        $flights = Flight::all();
 
         foreach ($flights as $flight) {
             foreach ($flight->passengers as $passenger) {

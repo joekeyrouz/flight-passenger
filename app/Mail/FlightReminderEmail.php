@@ -42,7 +42,7 @@ class FlightReminderEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            text: 'emails.flight_reminder_text', // Use a text-based view
+            view: 'emails.flight_reminder_text', // Use a text-based view
             with: [
                 'flight' => $this->flight,
                 'passenger' => $this->passenger,
