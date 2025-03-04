@@ -28,7 +28,7 @@ class DispatchFlightReminders extends Command
      */
     public function handle()
     {
-        $flights = Flight::all();
+        $flights = Flight::latest();
 
         foreach ($flights as $flight) {
             foreach ($flight->passengers as $passenger) {
