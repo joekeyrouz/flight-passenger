@@ -25,16 +25,12 @@ Route::post('login', [AuthController::class, 'login'])->middleware('throttle:3,1
 Route::post('register', [AuthController::class, 'register']);
 Route::post('logout', [AuthController::class, 'logout'])->middleWare('auth:sanctum');
 
+
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::get('flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
-    
-    Route::get('flights/{flight}/passengers', [PassengerController::class, 'index']);
-    Route::post('passengers/{passenger}/uploadImage', [PassengerImageController::class, 'uploadImage']);
-
-    Route::get('flights', [FlightController::class, 'index']);
-
-    Route::get('flights/{flight}', [FlightController::class, 'show']);
-    
+    // Route::get('flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
+    Route::apiResource('passengers', PassengerController::class);
+    Route::post('passengers/{passenger}/uploadImage', [PassengerImageController::class, 'uploadImage']);    
+    Route::apiResource('flights', FlightController::class);
     Route::apiResource('users', UserController::class);
     
     Route::get('users/export', [ExportUserController::class, 'export']);
