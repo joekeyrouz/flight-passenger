@@ -26,7 +26,6 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::post('logout', [AuthController::class, 'logout'])->middleWare('auth:sanctum');
 
-Route::post('import', [UserImportController::class, 'import']);
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
@@ -41,4 +40,6 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::apiResource('users', UserController::class);
     
     Route::get('users/export', [ExportUserController::class, 'export']);
+
+    Route::post('users/import', [UserImportController::class, 'import']);
 });
