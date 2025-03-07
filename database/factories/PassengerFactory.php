@@ -22,6 +22,7 @@ class PassengerFactory extends Factory
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'password' => $this->faker->password,
+            'image' => 'null',
             'date_of_birth' => $this->faker->date,
             'passport_expiry_date' => $this->faker->date,
         ];
