@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\FlightController;
 use App\Http\Controllers\Api\PassengerController;
 use App\Http\Controllers\Api\ExportUserController;
+use App\Http\Controllers\Api\UserImportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Route::post('login', [AuthController::class, 'login'])->middleware('throttle:3,1
 Route::post('register', [AuthController::class, 'register']);
 
 Route::post('logout', [AuthController::class, 'logout'])->middleWare('auth:sanctum');
+
+Route::post('import', [UserImportController::class, 'import']);
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('flights/{flight}/passengers/{passenger}', [PassengerController::class, 'show']);
