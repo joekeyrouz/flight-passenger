@@ -21,21 +21,22 @@ class PassengerController extends Controller
         return response()->json($passengers);
     }
 
-    public function store(Request $request){
+    public function store(Request $request,Flight $flight){
         $data = $request->validate([
             'first_name' => 'required|string|max:10',
             'last_name' => 'required|string|max:10',
             'email' => 'required|email|unique:passengers,email',
             'password' => 'required|string|min:8|confirmed',
+            'image' => 'nullable',
             'date_of_birth' => 'required|date',
             'passport_expiry_date' => 'required|date',
         ]);
 
-        $data['image'] = 'null';
-
         $data['password'] = Hash::make($data['password']);
 
         $passenger = Passenger::create($data);
+
+        $flight->passengers()->attach($passenger->id);
 
         return response()->json([
             'message' => 'passenger created successfuly',
@@ -62,8 +63,8 @@ class PassengerController extends Controller
         ]);
     }
 
-    public function destroy(Passenger $passenger){
-        $passenger->delete();
+    public function destroy(Flight $flight, Passenger $passenger){
+        $flight->passengers()->detach($passenger);
 
         return response()->json([
             'message' => 'passenger deleted successfuly',
