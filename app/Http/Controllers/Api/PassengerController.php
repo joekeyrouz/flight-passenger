@@ -44,7 +44,7 @@ class PassengerController extends Controller
         ]);
     }
 
-    public function update(Request $request, Passenger $passenger){
+    public function update(Request $request, Flight $flight, Passenger $passenger){
         $data = $request->validate([
             'first_name' => 'string|max:10',
             'last_name' => 'string|max:10',
