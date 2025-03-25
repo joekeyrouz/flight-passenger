@@ -27,7 +27,6 @@ class PassengerController extends Controller
             'last_name' => 'required|string|max:10',
             'email' => 'required|email|unique:passengers,email',
             'password' => 'required|string|min:8|confirmed',
-            'image' => 'nullable',
             'date_of_birth' => 'required|date',
             'passport_expiry_date' => 'required|date',
         ]);
