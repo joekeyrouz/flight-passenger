@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -41,6 +42,8 @@ class AuthController extends Controller
                 'message' => 'not correct credentials'
             ];
         }
+
+        $user->tokens()->delete();
 
         $token = $user->createToken('authToken')->plainTextToken;
         return[
